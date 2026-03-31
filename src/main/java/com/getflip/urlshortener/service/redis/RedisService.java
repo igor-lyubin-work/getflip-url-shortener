@@ -1,8 +1,6 @@
-package com.getflip.urlshortener.service;
+package com.getflip.urlshortener.service.redis;
 
 public interface RedisService {
-
-    long generateKey();
 
     void save(String key, String value);
 

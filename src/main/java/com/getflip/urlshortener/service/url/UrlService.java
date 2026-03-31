@@ -1,4 +1,4 @@
-package com.getflip.urlshortener.service;
+package com.getflip.urlshortener.service.url;
 
 public interface UrlService {
     String shortenUrl(String originalUrl);

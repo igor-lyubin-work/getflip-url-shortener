@@ -1,20 +1,27 @@
 package com.getflip.urlshortener.util;
 
+import lombok.experimental.UtilityClass;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
+@UtilityClass
 public class Base62Encoder {
-    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static final int BASE = ALPHABET.length();
 
-    public static String encode(long num) {
-        if (num == 0) {
-            return String.valueOf(ALPHABET.charAt(0));
+    public String generateRedisKey(String url) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(url.getBytes(StandardCharsets.UTF_8));
+
+            byte[] shortHash = new byte[8];
+            System.arraycopy(hash, 0, shortHash, 0, 8);
+            return Base64.getUrlEncoder()
+                    .withoutPadding()
+                    .encodeToString(shortHash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 not support", e);
         }
-
-        StringBuilder str = new StringBuilder();
-        while (num > 0) {
-            str.append(ALPHABET.charAt((int) (num % BASE)));
-            num /= BASE;
-        }
-
-        return str.reverse().toString();
     }
 }
