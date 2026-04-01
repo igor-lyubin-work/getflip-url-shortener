@@ -5,7 +5,7 @@ It provides endpoints to shorten long URLs and instantly redirect shortened alia
 
 ## Tech Stack
 - **Languages / Frameworks**: Java 21, Spring Boot 3.2.5, Maven, Lombok
-- **Persistence**: Redis (Source of truth, handles atomic sequence generation and caching with 7-day TTL)
+- **Persistence**: Redis
 - **Infrastructure**: Docker & Docker Compose
 
 ---
@@ -40,12 +40,12 @@ It provides endpoints to shorten long URLs and instantly redirect shortened alia
 - **Response** `201 Created`:
   ```json
   {
-    "shortUrl": "http://localhost:8080/cT9",
+    "shortUrl": "http://localhost:8080/api/v1/urls/abc12345",
     "longUrl": "https://www.getflip.com/about"
   }
   ```
 
 ### 2. Redirect
-- **URL**: `GET /api/v1/urls?alias={alias}` (e.g., `GET /cT9`)
+- **URL**: `GET /api/v1/urls?alias={abc12345}` (e.g., `GET /abc12345`)
 - **Response**: HTTP `302 Found` with `Location` header redirecting to the original URL.
 - **Response**: HTTP `404 Not Found` if alias does not exist.
