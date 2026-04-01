@@ -46,6 +46,6 @@ It provides endpoints to shorten long URLs and instantly redirect shortened alia
   ```
 
 ### 2. Redirect
-- **URL**: `GET /api/v1/urls?alias={abc12345}` (e.g., `GET /abc12345`)
+- **URL**: `GET /api/v1/urls?alias={alias}` (e.g., `GET /api/v1/urls?alias=abc12345`)
 - **Response**: HTTP `302 Found` with `Location` header redirecting to the original URL.
 - **Response**: HTTP `404 Not Found` if alias does not exist.
