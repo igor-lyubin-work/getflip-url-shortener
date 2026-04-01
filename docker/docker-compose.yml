@@ -15,10 +15,10 @@ services:
     networks:
       - url-shortener-network
 
-  app:
+  url-shortener:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     container_name: url-shortener-service
     ports:
       - "8080:8080"
