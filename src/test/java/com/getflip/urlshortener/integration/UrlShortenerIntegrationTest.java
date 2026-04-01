@@ -1,4 +1,4 @@
-package com.urlshortener.integration;
+package com.getflip.urlshortener.integration;
 
 import com.getflip.urlshortener.dto.ShortenUrlRequest;
 import com.getflip.urlshortener.dto.ShortenUrlResponse;
@@ -35,7 +35,7 @@ public class UrlShortenerIntegrationTest {
 
     @Test
     void testShortenAndRedirectFlow() {
-        ShortenUrlRequest request = new ShortenUrlRequest("https://spring.io/projects/spring-boot");
+        ShortenUrlRequest request = new ShortenUrlRequest("https://www.getflip.com");
 
         ResponseEntity<ShortenUrlResponse> createResponse = restTemplate.postForEntity(
                 "/api/v1/urls", request, ShortenUrlResponse.class);
@@ -47,14 +47,12 @@ public class UrlShortenerIntegrationTest {
         Assertions.assertNotNull(shortUrl);
         Assertions.assertTrue(shortUrl.contains("http"));
 
-        // Extract alias
         String alias = shortUrl.substring(shortUrl.lastIndexOf("/") + 1);
 
-        // 2. Access the short URL and verify redirect
         ResponseEntity<Void> redirectResponse = restTemplate.getForEntity("/" + alias, Void.class);
 
         Assertions.assertEquals(HttpStatus.FOUND, redirectResponse.getStatusCode());
-        Assertions.assertEquals("https://spring.io/projects/spring-boot",
+        Assertions.assertEquals("https://www.getflip.com",
                 redirectResponse.getHeaders().getLocation().toString());
     }
 }
