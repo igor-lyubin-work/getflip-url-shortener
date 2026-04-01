@@ -49,3 +49,7 @@ It provides endpoints to shorten long URLs and instantly redirect shortened alia
 - **URL**: `GET /api/v1/urls?alias={alias}` (e.g., `GET /api/v1/urls?alias=abc12345`)
 - **Response**: HTTP `302 Found` with `Location` header redirecting to the original URL.
 - **Response**: HTTP `404 Not Found` if alias does not exist.
+
+## Swagger
+### Swagger is enabled in all environments except production. 
+### UI is accessible at http://localhost:8080/swagger-ui/index.htm
