@@ -16,6 +16,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import static com.getflip.urlshortener.controller.UrlController.BASE_PATH;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 public class UrlShortenerIntegrationTest {
@@ -37,8 +39,7 @@ public class UrlShortenerIntegrationTest {
     void testShortenAndRedirectFlow() {
         ShortenUrlRequest request = new ShortenUrlRequest("https://www.getflip.com");
 
-        ResponseEntity<ShortenUrlResponse> createResponse = restTemplate.postForEntity(
-                "/api/v1/urls", request, ShortenUrlResponse.class);
+        ResponseEntity<ShortenUrlResponse> createResponse = restTemplate.postForEntity(BASE_PATH, request, ShortenUrlResponse.class);
 
         Assertions.assertEquals(HttpStatus.CREATED, createResponse.getStatusCode());
         Assertions.assertNotNull(createResponse.getBody());
@@ -49,7 +50,7 @@ public class UrlShortenerIntegrationTest {
 
         String alias = shortUrl.substring(shortUrl.lastIndexOf("/") + 1);
 
-        ResponseEntity<Void> redirectResponse = restTemplate.getForEntity("/" + alias, Void.class);
+        ResponseEntity<Void> redirectResponse = restTemplate.getForEntity(BASE_PATH + "?alias=" + alias, Void.class);
 
         Assertions.assertEquals(HttpStatus.FOUND, redirectResponse.getStatusCode());
         Assertions.assertEquals("https://www.getflip.com",
