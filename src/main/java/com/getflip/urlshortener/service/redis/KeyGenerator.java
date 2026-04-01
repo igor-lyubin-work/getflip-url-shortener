@@ -1,4 +1,4 @@
-package com.getflip.urlshortener.util;
+package com.getflip.urlshortener.service.redis;
 
 import lombok.experimental.UtilityClass;
 
@@ -8,11 +8,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @UtilityClass
-public class Base62Encoder {
+public class KeyGenerator {
+    private final String ALGORITHM = "SHA-256";
 
     public String generateRedisKey(String url) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            MessageDigest digest = MessageDigest.getInstance(ALGORITHM);
             byte[] hash = digest.digest(url.getBytes(StandardCharsets.UTF_8));
 
             byte[] shortHash = new byte[8];

@@ -1,7 +1,7 @@
 package com.getflip.urlshortener.service.url;
 
 import com.getflip.urlshortener.service.redis.RedisService;
-import com.getflip.urlshortener.util.Base62Encoder;
+import com.getflip.urlshortener.service.redis.KeyGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public String shortenUrl(String originalUrl) {
-        String alias = Base62Encoder.generateRedisKey(originalUrl);
+        String alias = KeyGenerator.generateRedisKey(originalUrl);
 
         redisService.save(alias, originalUrl);
 
